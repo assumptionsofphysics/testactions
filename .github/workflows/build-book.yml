@@ -30,6 +30,7 @@ jobs:
           # Use latexonline to build latest version
           cd book
           curl -L https://raw.githubusercontent.com/aslushnikov/latex-online/master/util/latexonline > laton && chmod 755 laton
+          ls -l
           laton book.tex
           ls -l
           # Add possible changes
