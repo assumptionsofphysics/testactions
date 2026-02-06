@@ -33,7 +33,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           git clone https://github.com/assumptionsofphysics/autogen autogen
-          git clone https://github.com/assumptionsofphysics/tools tools
+          git clone https://gcarcassi:${{ secrets.AUTOGEN_TOKEN }}@github.com/assumptionsofphysics/tools tools
           ls -l
           python tools/problem-scraper/extractOpenProblems.py autogen/openproblems.yaml book/pm_EnsembleSpaces.tex
           cat autogen/openproblems.yaml
@@ -42,7 +42,7 @@ jobs:
           git config user.email "gabriele.carcassi@gmail.com"
           git add openproblems.yaml
           git commit -m "Updating open problems"
-          git push https://x-access-token:${{ secrets.AUTOGEN_TOKEN }} HEAD:main
+          git push
           # Note: the following account information will not work on GHES
           # git add generated.txt
           # git commit -m "generated"
