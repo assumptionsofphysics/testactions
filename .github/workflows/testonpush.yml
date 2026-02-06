@@ -38,12 +38,12 @@ jobs:
           python tools/problem-scraper/extractOpenProblems.py autogen/openproblems.yaml book/pm_EnsembleSpaces.tex
           cat autogen/openproblems.yaml
           cd autogen
+          git config user.name "gcarcassi[bot]"
+          git config user.email "gabriele.carcassi@gmail.com"
           git add openproblems.yaml
           git commit -m "Updating open problems"
           git push https://x-access-token:${{ secrets.AUTOGEN_TOKEN }} HEAD:main
           # Note: the following account information will not work on GHES
-          # git config user.name "github-actions[bot]"
-          # git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # git add generated.txt
           # git commit -m "generated"
           # git push
