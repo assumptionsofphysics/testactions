@@ -33,12 +33,12 @@ jobs:
           # Output the directory contents for debugging
           ls -l
           # Run the script
-          python tools/problem-scraper/extractOpenProblems.py autogen/openproblems.yaml book/pm_EnsembleSpaces.tex
+          python tools/problem-scraper/extractOpenProblems.py autogen/openproblems.json book/pm_EnsembleSpaces.tex
           # Output of the script for debugging
-          cat autogen/openproblems.yaml
+          cat autogen/openproblems.json
           # Add possible changes
           cd autogen
-          git add openproblems.yaml
+          git add openproblems.json
           # Commit and push only if there were changes
           if ! git diff --cached --quiet; then
             git config user.name "gcarcassi[bot]"
