@@ -22,8 +22,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      #  with:
-      #    repository: assumptionsofphysics/autogen
+        with:
+          path: book
 
       # Runs a single command using the runners shell
       #- name: Run a one-line script
@@ -32,10 +32,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          date > generated.txt
+          git clone https://github.com/assumptionsofphysics/autogen autogen
+          git clone https://github.com/assumptionsofphysics/tools tools
+          ls -l
           # Note: the following account information will not work on GHES
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add generated.txt
-          git commit -m "generated"
-          git push
+          # git config user.name "github-actions[bot]"
+          # git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # git add generated.txt
+          # git commit -m "generated"
+          # git push
