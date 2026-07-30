@@ -1,0 +1,55 @@
+name: List changed files since last push
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  changed-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: List files changed in this push
+        id: changed
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          echo "Before: $BEFORE"
+          echo "After:  $AFTER"
+
+          # If this is the first push to a new branch, GitHub may provide
+          # 0000000000000000000000000000000000000000 as the before SHA.
+          if [[ "$BEFORE" =~ ^0{40}$ ]]; then
+            echo "No previous commit for this ref. Listing all files at $AFTER."
+            git ls-tree -r --name-only "$AFTER" | sort -u > changed_files.txt
+          else
+            git diff --name-only "$BEFORE" "$AFTER" | sort -u > changed_files.txt
+          fi
+
+          echo "Changed files:"
+          cat changed_files.txt
+
+          {
+            echo "changed_files<<EOF"
+            cat changed_files.txt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Example usage
+        shell: bash
+        run: |
+          echo "Files changed in this push:"
+          while IFS= read -r file; do
+            echo "- $file"
+          done <<< "${{ steps.changed.outputs.changed_files }}"
